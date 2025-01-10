@@ -1,0 +1,234 @@
+@use "global" as *;
+/* （the_content()で出力したものへのスタイル） */
+
+.wp-block-file a,
+.p-content p,
+.p-content li,
+.p-content th,
+.p-content td {
+
+}
+
+.p-content h2 {
+  font-size: 140%;
+  font-weight: $bold;
+}
+.p-content h3 {
+  font-size: 130%;
+  font-weight: $bold;
+}
+
+.p-content h4 {
+  font-size: 120%;
+  font-weight: $bold;
+}
+
+.p-content h2:nth-of-type(1) {
+  margin-top: rem(25);
+  @include mq() {
+    margin-top: rem(34);
+  }
+}
+
+.p-content h2:nth-of-type(n + 2) {
+  margin-top: rem(64);
+}
+
+.p-content figure:nth-child(n + 2) {
+  margin-top: rem(42);
+  @include mq() {
+    margin-top: rem(38);
+  }
+}
+
+.wp-block-file,
+.p-content p:nth-child(n + 2),
+.p-content h3:nth-child(n + 2),
+.p-content h4:nth-child(n + 2),
+.p-content h2 + ul:nth-of-type(n + 2),
+.p-content h2 + ol:nth-of-type(n + 2),
+.p-content ol > li > ol:nth-of-type(n + 2),
+.p-content figure {
+  margin-top: rem(22);
+  max-width: 100%;
+  @include mq() {
+    margin-top: rem(40);
+  }
+}
+
+.p-content img {
+  width: auto;
+}
+
+.p-content figure.aligncenter,
+.p-content img.aligncenter {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.p-content figure.alignright,
+.p-content img.alignright {
+  margin-left: auto;
+}
+
+.p-content > ol {
+  counter-reset: number 0;
+}
+
+.p-content > ol > li {
+  text-indent: rem(-16);
+  padding-left: rem(24);
+}
+
+.p-content > ol > li:nth-child(n + 10) {
+  text-indent: rem(-24);
+}
+
+.p-content > ol > li::before {
+  counter-increment: number 1;
+  content: counter(number) ". ";
+}
+.p-content > ol > li > ol {
+  counter-reset: number 0;
+}
+
+.p-content > ol > li > ol > li {
+  text-indent: rem(-16);
+  padding-left: rem(24);
+}
+
+.p-content > ol > li > ol > li::before {
+  counter-increment: number 1;
+  content: counter(number, lower-alpha) ". ";
+}
+
+.p-content > ol > li > ol > li > ol {
+  counter-reset: number 0;
+}
+
+.p-content > ol > li > ol > li > ol > li {
+  padding-left: rem(22);
+}
+
+.p-content > ol > li > ol > li > ol > li:nth-child(1) {
+  text-indent: rem(-12);
+}
+
+.p-content > ol > li > ol > li > ol > li:nth-child(2) {
+  text-indent: rem(-16);
+}
+
+.p-content > ol > li > ol > li > ol > li:nth-child(n + 3) {
+  text-indent: rem(-20);
+}
+
+.p-content > ol > li > ol > li > ol > li::before {
+  counter-increment: number 1;
+  content: counter(number, lower-roman) ". ";
+}
+
+.p-content ul > li {
+  text-indent: -1em;
+  padding-left: 1em;
+}
+
+.p-content ul > li::before {
+  content: "・";
+}
+
+.p-content ul > li ol {
+  counter-reset: number 0;
+}
+
+.p-content ul > li ol > li {
+  text-indent: -2em;
+  padding-left: 2em;
+}
+
+.p-content ul > li ol > li::before {
+  counter-increment: number 1;
+  content: "(" counter(number) ") ";
+}
+
+.p-content th {
+  padding: rem(8) rem(16);
+  border: none;
+  text-align: left;
+}
+
+.p-content td {
+  padding: rem(8) rem(16);
+  border: none;
+}
+
+.p-content tr:nth-child(odd) th,
+.p-content tr:nth-child(odd) td {
+  background-color: #f9f9fb;
+}
+
+.p-content tr:nth-child(even) th,
+.p-content tr:nth-child(even) td {
+  background-color: #e5e8ed;
+}
+
+.p-content .wp-block-table thead {
+  border-bottom: none;
+}
+
+.p-content figure.aligncenter,
+.p-content img.aligncenter {
+  margin-right: auto;
+  margin-left: auto;
+  float: none;
+}
+
+.p-content figure.alignright,
+.p-content img.alignright {
+  margin-left: auto;
+  float: none;
+}
+
+.p-content a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-decoration: underline;
+}
+
+.p-content .wp-block-group {
+  padding: rem(24);
+  background-color: #f7f8f8;
+  border-radius: rem(16);
+  font-size: rem(16);
+  font-weight: 300;
+  line-height: calc(32 / 16);
+  @include mq() {
+    padding: rem(24) rem(30);
+  }
+}
+
+.p-content cite {
+  font-style: normal;
+}
+
+.wp-block-file:not(.wp-element-button) a {
+  display: flex;
+  align-content: flex-start;
+  text-decoration: underline;
+}
+.wp-block-file:not(.wp-element-button) a::before {
+  margin-top: rem(8);
+  margin-right: rem(4);
+  flex-shrink: 0;
+  transform: translateY(rem(-8));
+  display: inline-block;
+  width: rem(24);
+  height: auto;
+  aspect-ratio: 1/1;
+  background: url(../images/common/icon_pdf.svg) no-repeat center/contain;
+  content: "";
+  @include mq() {
+    margin-top: rem(16);
+    margin-right: rem(8);
+    width: rem(32);
+  }
+}

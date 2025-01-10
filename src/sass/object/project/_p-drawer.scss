@@ -1,0 +1,22 @@
+@use "global" as *;
+@use "sass:math";
+
+.p-drawer {
+  background-color: beige; // test
+  padding: rem(100) 0 rem(80);
+}
+
+// .p-drawer__inner {
+// }
+
+// .p-drawer__nav-items {
+// }
+
+// .p-drawer__nav-item {
+// }
+
+.p-drawer__nav-item a {
+  display: flex;
+  gap: rem(10);
+  padding: rem(10);
+}

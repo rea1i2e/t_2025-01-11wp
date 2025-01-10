@@ -1,0 +1,25 @@
+@use "global" as *;
+
+.p-breadcrumb {
+}
+
+.p-breadcrumb span[property="itemListElement"]:nth-child(n + 2) {
+  margin-left: rem(10);
+}
+
+// 「パンくずの区切り」を擬似要素で作成する場合
+.p-breadcrumb span[property="itemListElement"]:nth-child(n + 2)::before {
+  margin-right: rem(10);
+  display: inline-block;
+  width: rem(6);
+  height: auto;
+  aspect-ratio: 5 / 7;
+  background: url(../images/common/breadcrumb-arrow.svg) no-repeat center / contain;
+  content: "";
+}
+
+// .p-breadcrumb__inner {
+// }
+
+// .p-breadcrumb__wrapper {
+// }

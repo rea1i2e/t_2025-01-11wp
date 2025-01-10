@@ -1,0 +1,261 @@
+@use "global" as *;
+@use "sass:math";
+
+.wpcf7-list-item {
+  margin: 0;
+}
+
+.wpcf7-spinner {
+  display: none;
+}
+
+.p-form {
+}
+
+.p-form__items {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: rem(15);
+  @include mq() {
+    gap: rem(12);
+  }
+}
+
+.p-form__item {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: rem(3);
+  @include mq() {
+  }
+}
+
+.p-form__item:first-of-type {
+  margin-bottom: rem(34);
+  gap: rem(10);
+  @include mq() {
+    margin-bottom: rem(27);
+    gap: rem(16);
+  }
+}
+
+.p-form__dt {
+  letter-spacing: calc(2.6em / 26);
+  line-height: calc(40 / 26);
+  @include mq() {
+    padding-top: rem(8);
+    padding-right: rem(24);
+  }
+}
+
+.p-form__item:first-of-type .p-form__dt {
+  letter-spacing: calc(2.8em / 28);
+  line-height: calc(42 / 28);
+}
+
+.p-form__dd {
+}
+
+.p-form__dd .wpcf7-checkbox,
+.p-form__dd .wpcf7-radio {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: rem(7);
+}
+
+.p-form__dd label {
+  font-size: rem(14);
+  letter-spacing: calc(1.68em / 28);
+  line-height: calc(20 / 14);
+  @include mq() {
+  }
+}
+
+.p-form__dd input:not([type="radio"]):not([type="checkbox"]),
+.p-form__dd textarea {
+  display: block;
+  width: 100%;
+  padding: rem(5) rem(10);
+  background-color: $white;
+  border: 1px solid;
+  border-radius: rem(6);
+  @include mq() {
+    padding: rem(12) rem(24);
+    border-radius: rem(12);
+  }
+}
+.p-form__dd input::placeholder,
+.p-form__dd textarea::placeholder {
+  color: #8f8f8f;
+}
+
+.p-form__dd input[type="checkbox"] + span,
+.p-form__dd input[type="radio"] + span {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: rem(6);
+  @include mq() {
+    gap: rem(14);
+  }
+}
+
+.p-form__dd input[type="radio"] + span::before {
+  flex-shrink: 0;
+  margin-right: rem(10);
+  display: inline-flex;
+  width: rem(20);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background-color: $white;
+  border: 1px solid $black;
+  border-radius: 50%;
+  content: "";
+  @include mq() {
+  }
+}
+
+.p-form__dd input[type="radio"]:checked + span::after {
+  position: absolute;
+  inset: 0;
+  display: inline-block;
+  width: rem(20);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background-color: $black;
+  border-radius: 50%;
+  content: "";
+  transform: scale(0.5);
+}
+
+.p-form__dd input[type="checkbox"] + span::before {
+  margin-top: rem(6);
+  flex-shrink: 0;
+  margin-right: rem(10);
+  display: inline-flex;
+  width: rem(12);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border: 1px solid $black;
+  content: "";
+  @include mq() {
+    margin-top: rem(3);
+    width: rem(16);
+  }
+}
+
+.p-form__dd input[type="checkbox"]:checked + span::after {
+  position: absolute;
+  top: rem(2);
+  left: rem(4);
+  margin: auto;
+  display: inline-block;
+  width: rem(6);
+  height: rem(12);
+  border-right: 2px solid $black;
+  border-bottom: 2px solid $black;
+  transform: rotate(45deg);
+  content: "";
+}
+
+.p-form__dd textarea {
+  height: rem(146);
+  @include mq() {
+    height: rem(188);
+  }
+}
+
+.p-form__acceptance {
+  margin-top: rem(19);
+  font-style: normal;
+  text-align: justify;
+  @include mq() {
+    margin-top: rem(26);
+  }
+}
+
+.p-form__acceptance input + span {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.p-form__acceptance input + span::before {
+  margin-top: rem(6);
+  flex-shrink: 0;
+  margin-right: rem(10);
+  display: inline-flex;
+  width: rem(12);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border: 1px solid $black;
+  content: "";
+  @include mq() {
+    margin-top: rem(7);
+  }
+}
+
+.p-form__acceptance input:checked + span::after {
+  position: absolute;
+  top: rem(2);
+  left: rem(4);
+  margin: auto;
+  display: inline-block;
+  width: rem(6);
+  height: rem(12);
+  border-right: 2px solid $black;
+  border-bottom: 2px solid $black;
+  transform: rotate(45deg);
+  content: "";
+}
+
+.p-form__policy-description {
+  margin-top: rem(28);
+  @include mq() {
+    margin-top: rem(42);
+  }
+}
+
+.p-form__policy-description a {
+  color: $black;
+  text-decoration: underline;
+}
+
+.p-form__send {
+  position: relative;
+  margin: rem(38) auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(27);
+  width: 100%;
+  max-width: rem(216);
+  @include mq() {
+    margin-top: rem(56);
+    max-width: rem(332);
+  }
+}
+
+.p-form__send input {
+  display: block;
+  width: 100%;
+  min-height: rem(41);
+  padding: 0 rem(35) 0 rem(27);
+  background-color: $black;
+  border-radius: 100vh;
+  color: $white;
+  letter-spacing: calc(1.56em / 26);
+  transition: opacity 0.3s ease-in-out;
+  @include mq() {
+    min-height: rem(63);
+    padding: 0 rem(54) 0 rem(42);
+  }
+}
+
+
+/* フォーカスされている要素を明確に示 */
+:focus-visible {
+}
+
+/* 入力デバイスのいずれかにhoverに対応している入力デバイスが含まれる場合に適用 */
+@media (any-hover: hover) {
+}

@@ -1,0 +1,7 @@
+@use 'global' as *;
+
+@for $i from 5 through 10 {
+  .fz#{2 * $i} {
+    font-size: maxrem(2 * $i);
+  }
+}

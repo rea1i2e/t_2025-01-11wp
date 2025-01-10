@@ -1,0 +1,8 @@
+@use 'global' as *;
+
+.l-hero-caption {
+  margin-top: rem(22);
+  @include mq() {
+    margin-top: rem(-22);
+  }
+}

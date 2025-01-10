@@ -1,0 +1,30 @@
+@use 'global' as *;
+
+$caption-gap: 1em; // 文字列間の余白を指定
+
+.p-hero-caption {
+  white-space: nowrap;
+  max-width: 100vw;
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  gap: $caption-gap;
+  font-size: rem(50);
+}
+
+.p-hero-caption__text {
+  color: #F1F1F1;
+  animation: marquee 45s linear infinite;
+  @include mq() {
+    font-size: rem(100);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0);
+  }
+  100% {
+    transform: translate(calc(-100% - $caption-gap));
+  }
+}
