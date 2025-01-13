@@ -3,34 +3,50 @@
 
 @if $startFrom == sp {
   //スマホファースト
-  html {
-    //375px~767px
-    font-size: 16px;
+html {
+  //375px~767px
+  font-size: 16px;
 
-    //~375px
-    @media (max-width: 375px) {
-      font-size: vw(375, 16);
-    }
-
-    @include mq("md") {
-      font-size: vw($inner-pc + $padding-pc * 2, 16);
-    }
-
-    //inner~max-screen
-    @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
-      font-size: 16px;
-    }
+  //~375px
+  @media (max-width: 375px) {
+    font-size: vw(375, 16);
   }
-} @else { 
+
+  @include mq(sm) {
+    font-size: vw(375, 16);
+  }
+
+  @include mq(md) {
+    font-size: vw($inner-pc + $padding-pc * 2, 16);
+  }
+
+  //inner~max-screen
+  @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
+    font-size: 16px;
+  }
+
+  @include mq(lg) {
+    font-size: 16px;
+  }
+}
+} @else {
   //PCファースト
   html {
     font-size: 16px;
 
+    @include mq(lg) {
+      font-size: 16px;
+    }
+    
     @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
       font-size: vw($inner-pc + $padding-pc * 2, 16);
     }
 
-    @include mq("md") {
+    @include mq(md) {
+      font-size: 16px;
+    }
+
+    @include mq(sm) {
       font-size: 16px;
     }
 
@@ -92,6 +108,12 @@ body {
   text-rendering: optimizeSpeed;
   font-family: $base-font-family;
   line-height: 1.5;
+  @media (min-width: 400px) {
+    background-color: pink;
+  }
+  @include mq() {
+    background-color: green;
+  }
 }
 
 main {
