@@ -22,6 +22,7 @@
   - src/sass/global/_breakpoints.scssにある変数を`pc` or `sp`に設定することで、spファースト・pcファーストの切り替えが可能です。（初期値：`sp`）
   - サイズ指定は、原則rem()を使います
   - font-sizeは、maxrem()の単位を使うことで、10px未満にならないように指定できます。
+  - src/root/内にファイルを設置すると、dist直下にコピーされます。（画像やJSファイルなど圧縮せずそのまま設置したいとき）
   - 詳細は、以下のNotionページで説明しています。
   https://rea1i2e.notion.site/WordPress-1770f4d8911580d09bf8ff20fbb843f2?pvs=4
   
