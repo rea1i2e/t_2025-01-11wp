@@ -22,6 +22,8 @@ const del = require("del"); // ファイルやディレクトリを削除する�
 const pixrem = require("pixrem");
 const replace = require("gulp-replace");
 const combineMq = require("postcss-combine-media-query");
+const webpackStream = require("webpack-stream");
+const named = require("vinyl-named");
 
 
 // 読み込み先
@@ -139,25 +141,40 @@ const imgImagemin = () => {
 };
 
 // js圧縮
-const jsBabel = () => {
-  // JavaScriptファイルを指定
-  return (
-    src(srcPath.js)
-      // エラーハンドリングを設定
-      .pipe(
-        plumber({
-          errorHandler: notify.onError("Error: <%= error.message %>"),
-        })
-      )
-      // Babelでトランスパイル（ES6からES5へ変換）
-      .pipe(
-        babel({
-          presets: ["@babel/preset-env"],
-        })
-      )
-      // 圧縮済みのファイルを出力先に保存
-      .pipe(dest(destWpPath.js))
-  );
+const jsWebpack = () => {
+  return src(srcPath.js)
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>"),
+    }))
+    .pipe(named())
+    .pipe(webpackStream({
+      mode: "development",
+      devtool: "source-map",
+      entry: {
+        index: "../src/js/index.js"
+      },
+      output: {
+        filename: "bundle.js"
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-env"]
+              }
+            }
+          }
+        ]
+      },
+      resolve: {
+        extensions: [".js"]
+      }
+    }))
+    .pipe(dest(destWpPath.js));
 };
 
 // root/に格納したファイルをそのまま出力
@@ -187,7 +204,7 @@ const clean = () => {
 // ファイルの監視
 const watchFiles = () => {
   watch(srcPath.css, series(cssSass, browserSyncReload));
-  watch(srcPath.js, series(jsBabel, browserSyncReload));
+  watch(srcPath.js, series(jsWebpack, browserSyncReload));
   watch(srcPath.img, series(imgImagemin, browserSyncReload));
   watch(srcPath.rt, series(copyRootFiles, browserSyncReload));
   watch('../**/*.php').on('change', browserSync.reload);
@@ -195,9 +212,9 @@ const watchFiles = () => {
 
 // ブラウザシンク付きの開発用タスク
 exports.default = series(
-  series(cssSass, jsBabel, imgImagemin, copyRootFiles),
+  series(cssSass, jsWebpack, imgImagemin, copyRootFiles),
   parallel(watchFiles, browserSyncFunc)
 );
 
 // 本番用タスク
-exports.build = series(clean, cssSass, jsBabel, imgImagemin, copyRootFiles);
+exports.build = series(clean, cssSass, jsWebpack, imgImagemin, copyRootFiles);
