@@ -17,7 +17,18 @@
 - `gulpfile.js`の`proxy`の設定「http://XXXXX.local/」とLOCALのSiteDomainを合わせる
   https://gyazo.com/5c5e683ff44ac48c69922e9082c6fa64
 - `npx gulp`でタスクランナー起動
- 
+
+## JavaScriptのバンドル設定
+- `src/js/`配下のJavaScriptファイルは、webpackでバンドルされます
+- エントリーポイントは`src/js/index.js`です
+- バンドルされたファイルは`dist/assets/js/bundle.js`に出力されます
+- モジュール分割の例：
+  - `src/js/index.js` - メインのエントリーポイント
+  - `src/js/_drawer.js` - ドロワーメニュー関連のモジュール
+  - `src/js/_slider.js` - スライダー関連のモジュール
+  - `src/js/_modal.js` - モーダル関連のモジュール
+  - アンダースコア（_）で始まるファイルは、モジュールファイルとして扱われます
+
 ## テンプレートファイルの特徴
   - src/sass/global/_breakpoints.scssにある変数を`pc` or `sp`に設定することで、spファースト・pcファーストの切り替えが可能です。（初期値：`sp`）
   - サイズ指定は、原則rem()を使います
