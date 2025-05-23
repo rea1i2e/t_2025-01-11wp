@@ -81,6 +81,13 @@
   }
 }
 
+:root {
+  --headerheight: #{rem(60)};
+  @include mq() {
+    --headerheight: #{rem(100)};
+  }
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -103,10 +110,7 @@ a {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: rem(60);
-  @include mq() {
-    scroll-padding-top: rem(100);
-  }
+  scroll-padding-top: var(--headerheight);
 }
 
 body {

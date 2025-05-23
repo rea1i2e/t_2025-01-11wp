@@ -5,8 +5,5 @@
   inset: 0 0 auto 0;
   z-index: 1001;
   width: 100%;
-  height: rem(60);
-  @include mq() {
-    height: rem(90);
-  }
+  height: var(--headerheight);
 }

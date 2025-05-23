@@ -42,11 +42,7 @@ img {
   max-width: 100%;
   display: block;
   width: 100%;
-}
-
-/* Natural flow and rhythm in articles by default */
-article > * + * {
-  margin-top: 1em;
+  height: auto;
 }
 
 /* Inherit fonts for inputs and buttons */
@@ -97,4 +93,18 @@ select {
 
 select::-ms-expand {
   display: none;
+}
+
+iframe {
+  width: 100%;
+}
+
+address,
+em {
+  font-style: normal;
+}
+
+button {
+  padding: 0;
+  color: inherit;
 }
