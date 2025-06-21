@@ -40,3 +40,6 @@ get_template_part('functions-lib/func-posts-edit');
 
 // YouTubeのoEmbedを修正（チャンネル外の関連動画を非表示）
 get_template_part('functions-lib/func-modify-youtube-oembed');
+
+// reCAPTCHAの表示制御
+get_template_part('functions-lib/func-recaptcha');
