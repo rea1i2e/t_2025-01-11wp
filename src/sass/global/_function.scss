@@ -9,9 +9,18 @@
   @return $number;
 }
 
-
 @function vw($window_width, $size) {
 	@return math.div($size, $window_width) * 100vw;
+}
+
+// 画面幅1920pxの状態を基準にvw変換
+@function vws($size) {
+	@return math.div($size, 1920) * 100vw;
+}
+
+// 画面幅375pxの状態を基準にvw変換
+@function vwl($size) {
+	@return math.div($size, 375) * 100vw;
 }
 
 // remへの計算式（16pxを基準としている。10pxを基準とする場合は16を10に変更する）
