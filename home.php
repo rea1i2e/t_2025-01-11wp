@@ -1,43 +1,37 @@
 <?php get_header(); ?>
 <main>
-  <?php get_template_part('parts/project/breadcrumb') ?>
-  <div class="l-post-list p-post-list">
-    <div class="p-post-list__inner l-inner">
-      <div class="p-post-list__heading">
-        <p class="c-section-heading1" data-english="news">
-          お知らせ
-        </p>
-      </div>
-      <?php if (have_posts()) : ?>
-        <div class="p-post-list__container">
-          <div class="p-post-list__container-inner">
-            <ul class="p-post-list__items">
-              <?php while (have_posts()) : the_post(); ?>
-                <LI class="p-post-list__item">
-                  <article class="p-post-list__post">
-                    <a href="<?php the_permalink(); ?>" class="p-post-list__link">
-                      <div class="p-post-list__meta">
-                        <time class="p-post-list__date" datetime="<?php echo esc_attr(get_the_date(DATE_W3C)); ?>">
-                          <?php echo get_the_date('Y.m.d'); ?>
-                        </time>
-                      </div>
-                      <h1 class="p-post-list__title">
-                        <?php the_title() ?>
-                      </h1>
-                    </a>
-                  </article>
-                </LI>
-              <?php endwhile; ?>
-            </ul>
+  <div class="p-news l-news">
+    <div class="p-news__inner l-inner">
+    <?php get_template_part('parts/project/breadcrumb') ?>
+      <h1 class="p-works__page-title c-page-title">
+        <?php single_cat_title(); ?>
+      </h1>
+      <div class="p-news__items p-news-items">
+        <?php if (have_posts()) : ?>
+          <?php while (have_posts()) : the_post(); ?>
+            <article class="p-news-items__post" data-fadein>
+              <a href="<?php the_permalink(); ?>" class="p-news-items__link">
+                <div class="p-news-items__wrap">
+                  <p class="p-news-items__date">
+                    <time class="" datetime="<?php echo get_the_date('Y-m-d'); ?>">
+                      <?php echo get_the_date('Y / m / d'); ?>
+                    </time>
+                  </p>
+                  <h2 class="p-news-items__title"><?php the_title(); ?></h2>
+                </div>
+              </a>
+            </article>
+          <?php endwhile; ?>
+          <div class="p-news-items__pagenavi">
+            <?php get_template_part('parts/project/p-pagenavi'); ?>
           </div>
-        </div>
-        <div class="p-post-list__pagenavi p-pagenavi">
-          <?php wp_pagenavi(); ?>
-        </div>
-      <?php else : ?>
-        <p class="p-post-list__no-post c-no-post">
-          新着情報はありません。
-        </p>
-      <?php endif; ?>
+        <?php else : ?>
+          <p class="p-news-items__no-post c-no-post">
+            新着情報はありません。
+          </p>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
 </main>
 <?php get_footer(); ?>

@@ -1,0 +1,11 @@
+@use 'global' as *;
+
+div:has(> img.u-no-image),
+figure:has(> img.u-no-image) {
+  border: 1px solid var(--gray2);
+}
+
+img.u-no-image {
+  padding: 10% 20%;
+  object-fit: contain;
+}
