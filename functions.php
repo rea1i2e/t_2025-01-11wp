@@ -43,3 +43,6 @@ get_template_part('functions-lib/func-modify-youtube-oembed');
 
 // reCAPTCHAの表示制御
 get_template_part('functions-lib/func-recaptcha');
+
+// サムネイルの設定
+get_template_part('functions-lib/func-thumbnail');

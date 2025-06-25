@@ -10,27 +10,7 @@
           <?php while (have_posts()) : the_post(); ?>
             <a href="<?php the_permalink(); ?>" class="p-archive__link" data-fadein>
               <figure class="p-archive__thumbnail">
-                <?php
-                if (has_post_thumbnail()) {
-                  // デバッグ用
-                  error_log('Post ID: ' . get_the_ID());
-                  error_log('Has thumbnail: true');
-
-                  // アイキャッチ画像のURLを取得
-                  $thumbnail_url = get_the_post_thumbnail_url(null, 'full');
-                  error_log('Thumbnail URL: ' . $thumbnail_url);
-
-                  if ($thumbnail_url) {
-                    the_post_thumbnail('full');
-                  } else {
-                    echo '<img class="u-no-image" src="' . esc_url(get_template_directory_uri()) . '/assets/images/common/logo.svg" alt="no image" width="371" height="239">';
-                  }
-                } else {
-                  error_log('Post ID: ' . get_the_ID());
-                  error_log('Has thumbnail: false');
-                  echo '<img class="u-no-image" src="' . esc_url(get_template_directory_uri()) . '/assets/images/common/logo.svg" alt="no image" width="371" height="239">';
-                }
-                ?>
+                <?php display_thumbnail('full'); ?>
               </figure>
               <h2 class="p-archive__title">
                 <span class="u-underline js-hover"><?php the_title() ?></span>
