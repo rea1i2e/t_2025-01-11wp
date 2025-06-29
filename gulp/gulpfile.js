@@ -19,6 +19,7 @@ const imageminMozjpeg = require("imagemin-mozjpeg"); // JPEGを最適化する�
 const imageminPngquant = require("imagemin-pngquant"); // PNGを最適化するためのモジュール
 const changed = require("gulp-changed"); // 変更されたファイルのみを対象にするためのモジュール
 const del = require("del"); // ファイルやディレクトリを削除するためのモジュール
+const webp = require("gulp-webp");  // webp不要時コメントアウト
 const pixrem = require("pixrem");
 const replace = require("gulp-replace");
 const combineMq = require("postcss-combine-media-query");
@@ -111,6 +112,8 @@ const imgImagemin = () => {
   // 画像ファイルを指定
   return (
     src(srcPath.img)
+      // 変更があった画像のみ処理対象に
+      .pipe(changed(destWpPath.img))
       // 画像を圧縮
       .pipe(
         imagemin(
@@ -137,6 +140,11 @@ const imgImagemin = () => {
       )
       // 圧縮済みの画像ファイルを出力先に保存
       .pipe(dest(destWpPath.img))
+      // .pipe(dest(destWpPath.img))
+      .pipe(webp()) //webp不要な場合はコメントアウト
+      // 圧縮済みの画像ファイルを出力先に保存
+      .pipe(dest(destWpPath.img))
+    // .pipe(dest(destWpPath.img))
   );
 };
 
