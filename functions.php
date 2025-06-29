@@ -46,3 +46,6 @@ get_template_part('functions-lib/func-recaptcha');
 
 // サムネイルの設定
 get_template_part('functions-lib/func-thumbnail');
+
+// ナビゲーションアイテムの設定
+get_template_part('functions-lib/func-nav-items');

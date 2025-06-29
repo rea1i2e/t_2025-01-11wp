@@ -15,8 +15,12 @@
 // .p-drawer__nav-item {
 // }
 
-.p-drawer__nav-item a {
+.p-drawer__nav-link {
   display: flex;
   gap: rem(10);
   padding: rem(10);
+}
+
+.p-drawer__nav-item.is-current .p-drawer__nav-link {
+  text-decoration: underline;
 }

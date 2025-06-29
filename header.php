@@ -25,30 +25,22 @@
       <button class="p-header__menu-button c-menu-button" id="js-menu" type="button" aria-controls="js-drawer" aria-expanded="false" aria-label="メニューを開閉する">
         <span></span>
       </button>
-      <?php
-      $navItems = [
-        [
-          'slug' => 'news',
-          'text' => 'お知らせ',
-        ],
-        [
-          'slug' => 'contact',
-          'text' => 'お問い合わせ',
-        ],
-      ];
-      ?>
       <nav class="p-header__pc-nav">
         <ul class="p-header__pc-nav-items">
-          <?php foreach ($navItems as $item) : ?>
-            <?php
-            if (is_page($item['slug']) || is_post_type_archive($item['slug']) || is_singular($item['slug'])) {
+          <?php foreach (get_nav_items() as $item) : ?>
+            <?php if (in_array($item['slug'], ['privacy-policy', 'terms-of-use'])) continue; // 一部除外 
+            ?>
+            <?php // 現在のページがナビゲーションのリンク先と一致しているかどうかを判定
+            if (is_front_page() && $item['slug'] === 'top') {
+              $is_current_class = 'is-current';
+            } elseif (is_page($item['slug']) || is_post_type_archive($item['slug']) || is_category($item['slug']) || is_tax($item['slug'])) {
               $is_current_class = 'is-current';
             } else {
               $is_current_class = '';
             }
             ?>
-            <li class="p-header__pc-nav-item <?php echo $is_current_class ?>">
-              <a href="<?php page_path($item['slug']); ?>"><?php echo $item['text'] ?></a>
+            <li class="p-header__pc-nav-item <?php echo isset($item['modifier']) ? 'p-header__pc-nav-item--' . $item['modifier'] : ''; ?> <?php echo $is_current_class ?>">
+            <a class="p-header__pc-nav-link" href="<?php echo $item['slug'] === 'top' ? page_path() : page_path($item['slug']); ?>"><?php echo $item['text'] ?></a>
             </li>
           <?php endforeach; ?>
         </ul>
@@ -58,9 +50,20 @@
   <nav class="l-drawer p-drawer" id="js-drawer" aria-hidden="true">
     <div class="p-drawer__inner l-inner">
       <ul class="p-drawer__nav-items">
-        <?php foreach ($navItems as $item) : ?>
-          <li class="p-drawer__nav-item">
-            <a href="<?php page_path($item['slug']); ?>"><?php echo $item['text'] ?></a>
+        <?php foreach (get_nav_items() as $item) : ?>
+          <?php if (in_array($item['slug'], ['privacy-policy', 'terms-of-use'])) continue; // 一部除外 
+          ?>
+          <?php // 現在のページがナビゲーションのリンク先と一致しているかどうかを判定
+          if (is_front_page() && $item['slug'] === 'top') {
+            $is_current_class = 'is-current';
+          } elseif (is_page($item['slug']) || is_post_type_archive($item['slug']) || is_category($item['slug']) || is_tax($item['slug']) ) {
+            $is_current_class = 'is-current';
+          } else {
+            $is_current_class = '';
+          }
+          ?>
+          <li class="p-drawer__nav-item <?php echo isset($item['modifier']) ? 'p-drawer__nav-item--' . $item['modifier'] : ''; ?> <?php echo $is_current_class ?>">
+            <a class="p-drawer__nav-link" href="<?php echo $item['slug'] === 'top' ? page_path() : page_path($item['slug']); ?>"><?php echo $item['text'] ?></a>
           </li>
         <?php endforeach; ?>
       </ul>
