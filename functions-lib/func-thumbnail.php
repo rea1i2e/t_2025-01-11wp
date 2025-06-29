@@ -22,16 +22,12 @@ function get_thumbnail_data($size = 'full') {
         // サムネイルのaltテキストを取得
         $alt_text = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
         
-        // altテキストが空の場合は投稿のタイトルを使用
-        if (empty($alt_text)) {
-            $alt_text = get_the_title();
-        }
     } else {
         $thumbnail_url = esc_url(get_template_directory_uri()) . '/assets/images/common/logo.svg';
         $width = 371; // デフォルトの幅
         $height = 239; // デフォルトの高さ
         $class = 'u-no-image';
-        $alt_text = get_the_title(); // デフォルトのaltテキスト
+        $alt_text = 'no image';
     }
     return [
         'url' => $thumbnail_url,

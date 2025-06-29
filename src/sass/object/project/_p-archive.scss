@@ -1,0 +1,48 @@
+@use 'global' as *;
+
+.p-archive {
+
+}
+
+.p-archive__inner {
+
+}
+
+.p-works__page-title {
+
+}
+
+.p-archive__posts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: rem(20);
+}
+
+.p-archive__link {
+
+}
+
+.p-archive__thumbnail {
+
+}
+
+.p-archive__thumbnail img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.p-archive__title {
+
+}
+
+.p-archive__date {
+
+}
+
+.p-archive__pagenavi {
+
+}
+
+.p-archive__no-post {
+
+}

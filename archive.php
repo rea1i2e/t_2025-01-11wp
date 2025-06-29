@@ -6,14 +6,14 @@
         <?php single_cat_title(); ?>
       </h1>
       <?php if (have_posts()) : ?>
-        <div class="p-archive__items">
+        <div class="p-archive__posts">
           <?php while (have_posts()) : the_post(); ?>
             <a href="<?php the_permalink(); ?>" class="p-archive__link" data-fadein>
               <figure class="p-archive__thumbnail">
                 <?php display_thumbnail('full'); ?>
               </figure>
               <h2 class="p-archive__title">
-                <span class="u-underline js-hover"><?php the_title() ?></span>
+                <?php the_title() ?>
               </h2>
               <p class="p-archive__date">
                 <time datetime="<?php echo get_the_date('Y-m-d'); ?>">
