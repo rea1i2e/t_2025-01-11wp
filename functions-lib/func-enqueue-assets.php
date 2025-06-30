@@ -19,7 +19,7 @@ function my_script_init()
   // Splide用のJS
   wp_enqueue_script('splide-script', '//cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js', [], null, true);
   // 基本JavaScript
-  wp_enqueue_script('my-script', get_theme_file_uri() . '/assets/js/script.js', [], filemtime(get_theme_file_path('assets/js/script.js')), true);
+  wp_enqueue_script('my-script', get_theme_file_uri() . '/assets/js/bundle.js', [], filemtime(get_theme_file_path('assets/js/bundle.js')), true);
   // Splide用のCSS
   wp_enqueue_style('splide-style', '//cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide-core.min.css', [], null, 'all');
   // 基本CSS

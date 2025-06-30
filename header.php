@@ -49,7 +49,7 @@
   </header>
   <nav class="l-drawer p-drawer" id="js-drawer" aria-hidden="true">
     <div class="p-drawer__inner l-inner">
-      <ul class="p-drawer__nav-items">
+      <ul class="p-drawer__nav-items" id="js-drawer-menu">
         <?php foreach (get_nav_items() as $item) : ?>
           <?php if (in_array($item['slug'], ['privacy-policy', 'terms-of-use'])) continue; // 一部除外 
           ?>
