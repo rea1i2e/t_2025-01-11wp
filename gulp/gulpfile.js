@@ -140,11 +140,9 @@ const imgImagemin = () => {
       )
       // 圧縮済みの画像ファイルを出力先に保存
       .pipe(dest(destWpPath.img))
-      // .pipe(dest(destWpPath.img))
       .pipe(webp()) //webp不要な場合はコメントアウト
-      // 圧縮済みの画像ファイルを出力先に保存
-      .pipe(dest(destWpPath.img))
-    // .pipe(dest(destWpPath.img))
+      // WebP画像を出力先に保存
+      .pipe(dest(destWpPath.img)) //webp不要な場合はコメントアウト
   );
 };
 
