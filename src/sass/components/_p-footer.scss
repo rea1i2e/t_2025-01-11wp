@@ -1,0 +1,36 @@
+@use "global" as *;
+
+.p-footer {
+  padding-block: rem(74) rem(28);
+}
+
+.p-footer__inner {
+}
+
+.p-footer__logo {
+  width: rem(203);
+}
+
+.p-footer__logo-link {
+  display: block;
+}
+
+
+.p-footer__nav {
+}
+
+.p-footer__nav-items {
+}
+
+.p-footer__nav-item {
+}
+
+.p-footer__nav-link {
+}
+.p-footer__copyright {
+  margin-top: rem(85);
+  text-align: center;
+}
+
+.p-footer__copyright small {
+}
