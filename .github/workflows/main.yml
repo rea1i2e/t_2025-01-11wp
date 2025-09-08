@@ -1,0 +1,161 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Record build start time
+        id: start_time
+        run: echo "start_time=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: |
+          cd gulp
+          npm install --frozen-lockfile
+
+      - name: Build project
+        run: |
+          cd gulp
+          npx gulp
+        env:
+          CI: true
+
+      - name: Verify build output
+        run: |
+          ls -la assets/
+          if [ ! -d "assets" ]; then
+            echo "Build failed: assets directory not found"
+            exit 1
+          fi
+
+      - name: PHP Syntax Check
+        id: php_validation
+        run: |
+          echo "Running PHP syntax validation..."
+          echo "Checking PHP theme files..."
+          
+          php_errors=0
+          error_details=""
+          
+          # PHPファイルの構文チェック
+          for file in $(find . -name "*.php" -not -path "./gulp/*"); do
+            if ! php -l "$file" > /dev/null 2>&1; then
+              echo "PHP syntax error in: $file"
+              php_errors=$((php_errors + 1))
+              if [ $php_errors -eq 1 ]; then
+                error_details=$(php -l "$file" 2>&1 | head -1 | cut -c1-120)
+              fi
+            fi
+          done
+          
+          if [ $php_errors -eq 0 ]; then
+            echo "php_result=✅ PHP syntax validation passed" >> $GITHUB_OUTPUT
+            echo "php_status=success" >> $GITHUB_OUTPUT
+            echo "php_details=" >> $GITHUB_OUTPUT
+            echo "php_error_count=0" >> $GITHUB_OUTPUT
+          else
+            echo "php_result=❌ PHP syntax errors found ($php_errors files)" >> $GITHUB_OUTPUT
+            echo "php_status=failed" >> $GITHUB_OUTPUT
+            echo "php_details=$error_details" >> $GITHUB_OUTPUT
+            echo "php_error_count=$php_errors" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /wp-content/themes/t_2025-01-11wp/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/gulp/**
+            **/src/**
+            **/.DS_Store
+            **/Thumbs.db
+            **/README.md
+          log-level: verbose
+
+      - name: Calculate build time
+        id: build_time
+        run: |
+          end_time=$(date +%s)
+          build_duration=$((end_time - ${{ steps.start_time.outputs.start_time }}))
+          minutes=$((build_duration / 60))
+          seconds=$((build_duration % 60))
+          if [ $minutes -gt 0 ]; then
+            echo "duration=${minutes}分${seconds}秒" >> $GITHUB_OUTPUT
+          else
+            echo "duration=${seconds}秒" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Discord Notification - Success
+        if: success()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            🚀 **デプロイ成功！**
+            
+            **テスト環境**: ${{ secrets.TEST_URL }}
+            **リポジトリ**: https://github.com/${{ github.repository }}
+            **ブランチ**: ${{ github.ref_name }}
+            **コミット**: ${{ github.sha }}
+            **コミットメッセージ**: ${{ github.event.head_commit.message }}
+            **作業者**: ${{ github.actor }}
+            **ビルド時間**: ${{ steps.build_time.outputs.duration }}
+            
+            **🔍 バリデーション結果:**
+            **PHP**: ${{ steps.php_validation.outputs.php_result }} (エラー: ${{ steps.php_validation.outputs.php_error_count }})${{ steps.php_validation.outputs.php_details && format('
+            
+            **PHP詳細:**```
+            {0}
+            ```', steps.php_validation.outputs.php_details) || '' }}${{ steps.php_validation.outputs.php_status == 'failed' && format('
+            
+            詳細ログ: https://github.com/{0}/actions/runs/{1}', github.repository, github.run_id) || '' }}
+            
+            ✅ サイトが正常にアップデートされました！
+
+      - name: Discord Notification - Failure
+        if: failure()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            ❌ **デプロイ失敗**
+            
+            **リポジトリ**: https://github.com/${{ github.repository }}
+            **ブランチ**: ${{ github.ref_name }}
+            **コミット**: ${{ github.sha }}
+            **コミットメッセージ**: ${{ github.event.head_commit.message }}
+            **作業者**: ${{ github.actor }}
+            **時刻**: ${{ github.event.head_commit.timestamp }}
+            
+            🔍 GitHub Actionsのログを確認してください。
+            🔗 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
