@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main>
-  <?php get_template_part('parts/project/mv'); ?>
-  <?php get_template_part('parts/project/hero-paption'); ?>
+  <?php get_template_part('components/top-mv'); ?>
+  <?php get_template_part('components/hero-paption'); ?>
 
   <div class="l-inner">
     <br /><br /><br /><br /><br />
@@ -11,7 +11,7 @@
       $args = [
         'sp' => true,
         'directory' => '/dummy/',
-        'file' => 'dummy1',
+        'file' => 'dummy2',
         'type' => 'jpg',
         'width' => '1035',
         'height' => '690',
@@ -20,11 +20,13 @@
         'alt' => 'alt指定',
         'lazy' => true
       ];
-      get_template_part('parts/common/picture', null, $args);
+      get_template_part('components/picture', null, $args);
       ?>
     </div>
     <h2>モーダル</h2>
-    <?php get_template_part('parts/project/p-modal'); ?>
+    <?php get_template_part('components/p-dialog'); ?>
+    <h2>タブ切り替え</h2>
+    <?php get_template_part('components/p-tab'); ?>
   </div>
 </main>
 <?php get_footer(); ?>

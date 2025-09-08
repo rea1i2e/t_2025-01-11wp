@@ -2,7 +2,7 @@
 <main>
   <div class="p-news l-news">
     <div class="p-news__inner l-inner">
-    <?php get_template_part('parts/project/breadcrumb') ?>
+    <?php get_template_part('components/breadcrumb') ?>
       <h1 class="p-works__page-title c-page-title">
         <?php single_cat_title(); ?>
       </h1>
@@ -23,7 +23,7 @@
             </article>
           <?php endwhile; ?>
           <div class="p-news-items__pagenavi">
-            <?php get_template_part('parts/project/p-pagenavi'); ?>
+            <?php get_template_part('components/p-pagenavi'); ?>
           </div>
         <?php else : ?>
           <p class="p-news-items__no-post c-no-post">

@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <main>
-  <?php get_template_part('parts/project/breadcrumb') ?>
+  <?php get_template_part('components/breadcrumb') ?>
   <div class="l-contact p-contact">
     <div class="p-contact__inner l-inner">
       <div class="p-contact__content">

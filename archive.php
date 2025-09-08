@@ -24,7 +24,7 @@
           <?php endwhile; ?>
         </div>
         <div class="p-archive__pagenavi">
-          <?php get_template_part('parts/project/p-pagenavi'); ?>
+          <?php get_template_part('components/p-pagenavi'); ?>
         </div>
       <?php else : ?>
         <p class="p-archive__no-post c-no-post">

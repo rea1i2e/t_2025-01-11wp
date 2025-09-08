@@ -1,28 +1,28 @@
 @use "global" as *;
 
-.p-mv {
+.p-top-mv {
   position: relative;
 }
 
-.p-mv__slider {
+.p-top-mv__slider {
 }
 
-.p-mv__slider-track {
+.p-top-mv__slider-track {
 }
 
-.p-mv__slider-list {
+.p-top-mv__slider-list {
 }
 
-.p-mv__slider-item {
+.p-top-mv__slider-item {
 }
 
-.p-mv__slider-item img {
+.p-top-mv__slider-item img {
   height: 100vh;
   min-height: rem(400);
   object-fit: cover;
 }
 
-.p-mv__copy {
+.p-top-mv__copy {
   position: absolute;
   inset: 50% 0 auto;
   z-index: 100;
@@ -31,16 +31,16 @@
   }
 }
 
-.p-mv__inner {
+.p-top-mv__inner {
 }
 
-.p-mv__main-copy {
+.p-top-mv__main-copy {
   color: #2f4aa1;
   // @include mq() {
   // }
 }
 
-.p-mv__sub-copy {
+.p-top-mv__sub-copy {
   margin-top: rem(16);
   //   @include mq() {
   //   }
