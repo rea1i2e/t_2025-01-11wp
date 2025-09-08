@@ -6,25 +6,19 @@ const notify = require("gulp-notify"); // エラーやタスク完了の通知�
 const sassGlob = require("gulp-sass-glob-use-forward"); // SCSSのインポートを簡略化するためのモジュール
 const postcss = require("gulp-postcss"); // CSSの変換処理を行うためのモジュール
 const autoprefixer = require("autoprefixer"); // ベンダープレフィックスを自動的に追加するためのモジュール
-const cssdeclsort = require("css-declaration-sorter"); // CSSの宣言をソートするためのモジュール
 const postcssPresetEnv = require("postcss-preset-env"); // 最新のCSS構文を使用可能にするためのモジュール
-const rename = require("gulp-rename"); // ファイル名を変更するためのモジュール
 const sourcemaps = require("gulp-sourcemaps"); // ソースマップを作成するためのモジュール
-const babel = require("gulp-babel"); // ES6+のJavaScriptをES5に変換するためのモジュール
-const uglify = require("gulp-uglify"); // JavaScriptを圧縮するためのモジュール
 const imageminSvgo = require("imagemin-svgo"); // SVGを最適化するためのモジュール
 const browserSync = require("browser-sync"); // ブラウザの自動リロード機能を提供するためのモジュール
 const imagemin = require("gulp-imagemin"); // 画像を最適化するためのモジュール
 const imageminMozjpeg = require("imagemin-mozjpeg"); // JPEGを最適化するためのモジュール
 const imageminPngquant = require("imagemin-pngquant"); // PNGを最適化するためのモジュール
-const changed = require("gulp-changed"); // 変更されたファイルのみを対象にするためのモジュール
+const changed = require("gulp-changed").default || require("gulp-changed"); // 変更されたファイルのみを対象にするためのモジュール
 const del = require("del"); // ファイルやディレクトリを削除するためのモジュール
 const webp = require("gulp-webp");  // webp不要時コメントアウト
-const pixrem = require("pixrem");
-const replace = require("gulp-replace");
-const combineMq = require("postcss-combine-media-query");
 const webpackStream = require("webpack-stream");
 const named = require("vinyl-named");
+const path = require("path");
 
 
 // 読み込み先
@@ -45,67 +39,33 @@ const destWpPath = {
   rt: `../`,
 };
 
-const browsers = [
-  "last 2 versions",
-  "> 5%",
-  "ie = 11",
-  "not ie <= 10",
-  "ios >= 8",
-  "and_chr >= 5",
-  "Android >= 5",
-];
-
+// Sassコンパイル
+const browsers = [ // 対応ブラウザの指定
+  'last 2 versions',
+  '> 1%',
+  'not dead',
+  'not ie 11'
+]
 const cssSass = () => {
-  // ソースファイルを指定
-  return (
-    src(srcPath.css)
-      // ソースマップを初期化
-      .pipe(sourcemaps.init())
-      // エラーハンドリングを設定
-      .pipe(
-        plumber({
-          errorHandler: notify.onError("Error:<%= error.message %>"),
-        })
-      )
-      // Sassのパーシャル（_ファイル）を自動的にインポート
-      .pipe(sassGlob())
-      // SassをCSSにコンパイル
-      .pipe(
-        sass.sync({
-          includePaths: ["src/sass"],
-          outputStyle: "expanded", // コンパイル後のCSSの書式（expanded or compressed）
-        })
-      )
-      // ベンダープレフィックスを自動付与
-      .pipe(
-        postcss([
-          postcssPresetEnv(),
-          autoprefixer({
-            grid: true,
-          }),
-        ])
-      )
-      // CSSプロパティをアルファベット順にソートし、未来のCSS構文を使用可能に
-      .pipe(
-        postcss([
-          cssdeclsort({ order: "alphabetical" }),
-          pixrem({ atrules: true }),
-          postcssPresetEnv({ browsers: "last 2 versions" }),
-          combineMq() // 2023/09/08 style.css.map に対応する
-        ])
-      )
-      // ソースマップを書き出し
-      .pipe(sourcemaps.write("./"))
-      .pipe(dest(destWpPath.css))
-      // Sassコンパイルが完了したことを通知
-      .pipe(
-        notify({
-          message: "Sassをコンパイルしました！",
-          onLast: true,
-        })
-      )
-  );
-};
+  return src(srcPath.css)
+    .pipe(sourcemaps.init()) // ソースマップの初期化
+    .pipe(
+      plumber({ // エラーが出ても処理を止めない
+          errorHandler: notify.onError('Error:<%= error.message %>')
+      }))
+    .pipe(sassGlob()) // globパターンを使用可にする
+    .pipe(sass.sync({ // sassコンパイル
+      includePaths: ['src/sass'], // 相対パス省略
+      outputStyle: 'expanded' // 出力形式をCSSの一般的な記法にする
+    }))
+    .pipe(postcss([autoprefixer({ overrideBrowserslist: browsers })])) // ベンダープレフィックス自動付与
+    .pipe(sourcemaps.write('./')) // ソースマップの出力先をcssファイルから見たパスに指定
+    .pipe(dest(destWpPath.css)) // 
+    .pipe(notify({ // エラー発生時のアラート出力
+      message: 'Sassをコンパイルしました！',
+      onLast: true
+    }))
+}
 
 // 画像圧縮
 const imgImagemin = () => {
@@ -140,24 +100,24 @@ const imgImagemin = () => {
       )
       // 圧縮済みの画像ファイルを出力先に保存
       .pipe(dest(destWpPath.img))
-      .pipe(webp()) //webp不要な場合はコメントアウト
-      // WebP画像を出力先に保存
-      .pipe(dest(destWpPath.img)) //webp不要な場合はコメントアウト
+      .pipe(webp()).pipe(dest(destWpPath.img)) // webp不要な場合はコメントアウト
   );
 };
 
-// js圧縮
+// JavaScript処理
 const jsWebpack = () => {
   return src(srcPath.js)
-    .pipe(plumber({
-      errorHandler: notify.onError("Error: <%= error.message %>"),
-    }))
+    .pipe(
+      plumber({
+        errorHandler: notify.onError("Error: <%= error.message %>"),
+      })
+    )
     .pipe(named())
     .pipe(webpackStream({
       mode: "development",
       devtool: "source-map",
       entry: {
-        index: "../src/js/index.js"
+        bundle: "../src/js/index.js" // エントリーポイント
       },
       output: {
         filename: "bundle.js"
@@ -173,15 +133,33 @@ const jsWebpack = () => {
                 presets: ["@babel/preset-env"]
               }
             }
+          },
+          // CSSローダーの設定を追加
+          {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader"]
           }
         ]
       },
       resolve: {
-        extensions: [".js"]
+        extensions: [".js"],
+        modules: [
+          path.resolve(__dirname, "node_modules"),
+          "node_modules"
+        ],
+        alias: {
+          "@splidejs/splide": path.resolve(__dirname, "node_modules/@splidejs/splide"),
+          "@splidejs/splide-extension-auto-scroll": path.resolve(__dirname, "node_modules/@splidejs/splide-extension-auto-scroll")
+        }
       }
     }))
-    .pipe(dest(destWpPath.js));
+    .pipe(dest(destWpPath.js))
+    .pipe(notify({
+      message: 'JavaScriptをバンドルしました！',
+      onLast: true
+    }));
 };
+
 
 // root/に格納したファイルをそのまま出力
 const copyRootFiles = () => {

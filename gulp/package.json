@@ -1,51 +1,38 @@
 {
-  "name": "src",
-  "version": "1.0.0",
-  "description": "",
-  "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "wp-env": "wp-env",
+    "wp": "wp-env run cli wp"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@babel/core": "^7.21.3",
-    "@babel/preset-env": "^7.20.2",
-    "autoprefixer": "^10.4.14",
-    "browser-sync": "^2.29.1",
-    "css-declaration-sorter": "^6.4.0",
-    "del": "^6.1.1",
-    "fs": "^0.0.1-security",
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "@wordpress/env": "^10.4.0",
+    "autoprefixer": "^10.4.16",
+    "babel-loader": "^9.1.3",
+    "browser-sync": "^2.29.3",
+    "css-loader": "^7.1.2",
     "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-changed": "^4.0.3",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-html-beautify": "^1.0.1",
+    "gulp-changed": "^5.0.2",
     "gulp-imagemin": "^7.1.0",
-    "gulp-merge-media-queries": "^0.2.1",
-    "vinyl-named": "^1.1.0",
     "gulp-notify": "^4.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.1",
-    "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.1.4",
     "gulp-sass": "^5.1.0",
     "gulp-sass-glob-use-forward": "^0.1.3",
     "gulp-sourcemaps": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
     "gulp-webp": "^4.0.1",
-    "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-pngquant": "^9.0.2",
+    "imagemin-mozjpeg": "^8.0.0",
+    "imagemin-pngquant": "^8.0.0",
     "imagemin-svgo": "^7.1.0",
-    "sass": "^1.60.0",
-    "pixrem": "^5.0.0",
-    "postcss-preset-env": "^8.5.1",
-    "webpack": "^5.88.0",
-    "webpack-stream": "^7.0.0",
-    "babel-loader": "^9.1.2"
+    "postcss-preset-env": "^10.2.4",
+    "sass": "^1.69.0",
+    "style-loader": "^4.0.0",
+    "vinyl-named": "^1.1.0",
+    "webpack-stream": "^7.0.0"
   },
-  "devDependencies": {
-    "postcss-combine-media-query": "^1.0.1"
+  "dependencies": {
+    "@splidejs/splide": "^4.1.4",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
+    "del": "^6.0.0"
   }
 }
