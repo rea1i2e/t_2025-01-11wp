@@ -1,16 +1,14 @@
-@use 'global' as *;
+@use "global" as *;
 
-@if $startFrom == sp {
-  .u-sp {
-    @include mq() {
-      display: none;
-    }
-  }
-} @else {
-  .u-sp {
+.u-sp {
+  @include mq() {
     display: none;
-    @include mq() {
-      display: block;
-    }
+  }
+}
+// PCファースト
+.u-sp {
+  display: none;
+  @include mq() {
+    display: block;
   }
 }

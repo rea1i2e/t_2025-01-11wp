@@ -1,0 +1,36 @@
+@use 'global' as *;
+
+.p-tab__menu-items {
+  display: flex;
+}
+
+.p-tab__button {
+  display: block;
+  position: relative;
+}
+
+.p-tab__button.is-active {
+  background-color: rgb(248, 173, 143);
+}
+
+
+/* タブコンテンツ */
+.p-tab__contents {
+}
+
+.p-tab__content {
+  display: none;
+}
+.p-tab__content.is-active {
+  display: block;
+  animation: fade 0.5s ease;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

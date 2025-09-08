@@ -75,7 +75,7 @@
   display: block;
   width: 100%;
   padding: rem(5) rem(10);
-  background-color: $white;
+  background-color: var(--color-white);
   border: 1px solid;
   border-radius: rem(6);
   @include mq() {
@@ -106,8 +106,8 @@
   width: rem(20);
   height: auto;
   aspect-ratio: 1 / 1;
-  background-color: $white;
-  border: 1px solid $black;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
   border-radius: 50%;
   content: "";
   @include mq() {
@@ -121,7 +121,7 @@
   width: rem(20);
   height: auto;
   aspect-ratio: 1 / 1;
-  background-color: $black;
+  background-color: var(--color-black);
   border-radius: 50%;
   content: "";
   transform: scale(0.5);
@@ -135,7 +135,7 @@
   width: rem(12);
   height: auto;
   aspect-ratio: 1 / 1;
-  border: 1px solid $black;
+  border: 1px solid var(--color-black);
   content: "";
   @include mq() {
     margin-top: rem(3);
@@ -151,8 +151,8 @@
   display: inline-block;
   width: rem(6);
   height: rem(12);
-  border-right: 2px solid $black;
-  border-bottom: 2px solid $black;
+  border-right: 2px solid var(--color-black);
+  border-bottom: 2px solid var(--color-black);
   transform: rotate(45deg);
   content: "";
 }
@@ -187,7 +187,7 @@
   width: rem(12);
   height: auto;
   aspect-ratio: 1 / 1;
-  border: 1px solid $black;
+  border: 1px solid var(--color-black);
   content: "";
   @include mq() {
     margin-top: rem(7);
@@ -202,8 +202,8 @@
   display: inline-block;
   width: rem(6);
   height: rem(12);
-  border-right: 2px solid $black;
-  border-bottom: 2px solid $black;
+  border-right: 2px solid var(--color-black);
+  border-bottom: 2px solid var(--color-black);
   transform: rotate(45deg);
   content: "";
 }
@@ -216,7 +216,7 @@
 }
 
 .p-form__policy-description a {
-  color: $black;
+  color: var(--color-black);
   text-decoration: underline;
 }
 
@@ -240,9 +240,9 @@
   width: 100%;
   min-height: rem(41);
   padding: 0 rem(35) 0 rem(27);
-  background-color: $black;
+  background-color: var(--color-black);
   border-radius: 100vh;
-  color: $white;
+  color: var(--color-white);
   letter-spacing: calc(1.56em / 26);
   transition: opacity 0.3s ease-in-out;
   @include mq() {

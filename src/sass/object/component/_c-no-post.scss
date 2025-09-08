@@ -1,9 +1,0 @@
-@use 'global' as *;
-
-.c-no-post {
-  font-size: rem(16);
-  text-align: center;
-  @include mq() {
-    font-size: rem(24);
-  }
-}

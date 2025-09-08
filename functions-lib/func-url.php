@@ -52,6 +52,11 @@ function page_path( $page = "" ) {
   echo esc_url(home_url($page));
 }
 
-
-
-?>
+/* ホームURLのパスを返す（echoなし） */
+function get_page_path( $page = "" ) {
+  // スラッシュが不要な場合は処理しない
+  if (strpos($page, '#') === false && strpos($page, '?') === false && !preg_match('/\.[a-zA-Z0-9]+$/', $page)) {
+      $page .= '/';
+  }
+  return esc_url(home_url($page));
+}

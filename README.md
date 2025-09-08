@@ -35,7 +35,7 @@
   - font-sizeは、maxrem()の単位を使うことで、10px未満にならないように指定できます。
   - src/root/内にファイルを設置すると、dist直下にコピーされます。（画像やJSファイルなど圧縮せずそのまま設置したいとき）
   - 詳細は、以下のNotionページで説明しています。
-  https://rea1i2e.notion.site/WordPress-1770f4d8911580d09bf8ff20fbb843f2?pvs=4
+  https://www.notion.so/rea1i2e/WordPress-2110f4d891158056bd60cba5652e3e70
   
 ## その他
 - 提出時は`npx gulp build`コマンドで、`assets/`内の不要なファイル（`scr/`で削除したもの）を削除できます。

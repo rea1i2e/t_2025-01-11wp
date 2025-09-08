@@ -1,3 +1,4 @@
+console.log("drawer");
 // ドロワーメニュー関連の処理
 const menuButton = document.getElementById("js-menu");
 const drawer = document.getElementById("js-drawer");

@@ -9,6 +9,9 @@ get_template_part('functions-lib/func-base');
 // セキュリティー対応
 get_template_part('functions-lib/func-security');
 
+// ページの自動生成を防ぐ
+get_template_part('functions-lib/func-no-auto-generate');
+
 // All-in-One WP Migrationによるエクスポート除外設定
 get_template_part('functions-lib/func-add-ai1wm-exclude');
 

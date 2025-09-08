@@ -52,12 +52,12 @@ modalBtns.forEach(function (btn) {
 });
 
 // 1つ目のモーダルを常時表示 // test
-const firstModal = document.querySelector("[data-modal]");
-if (firstModal) {
-  firstModal.classList.add("is-show");
-  document.documentElement.style.overflow = "hidden";
-  document.body.style.overflow = "hidden";
-}
+// const firstModal = document.querySelector("[data-modal]");
+// if (firstModal) {
+//   firstModal.classList.add("is-show");
+//   document.documentElement.style.overflow = "hidden";
+//   document.body.style.overflow = "hidden";
+// }
 
 const closeBtns = document.querySelectorAll("[data-modal-close]");
 closeBtns.forEach(function (btn) {

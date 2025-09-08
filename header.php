@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="shortcut icon" href="<?php temp_path('/favicon.ico'); ?>">
   <link rel="apple-touch-icon" href="<?php temp_path('/apple-touch-icon.png'); ?>">
-  <?php get_template_part('parts/common/adjust-admin-bar'); ?>
+  <link rel="preload" href="<?php temp_path('/fonts/NotoSansJP-VF.woff2'); ?>" as="font" type="font/woff2" crossorigin>
   <?php wp_head(); ?>
 </head>
 

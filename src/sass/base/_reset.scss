@@ -16,6 +16,7 @@ h1,
 h2,
 h3,
 h4,
+h5,
 p,
 ul,
 ol,
@@ -39,9 +40,9 @@ a:not([class]) {
 
 /* Make images easier to work with */
 img {
-  max-width: 100%;
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
 }
 
@@ -96,7 +97,8 @@ select::-ms-expand {
 }
 
 iframe {
-  width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
 address,
