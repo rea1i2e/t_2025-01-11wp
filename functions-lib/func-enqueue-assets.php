@@ -9,19 +9,12 @@
  */
 function my_script_init()
 {
-  // フォントの設定
-  wp_enqueue_style('NotoSansJP', '//fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap', [], null);
-
   // WordPressがデフォルトで提供するjQueryは使用しない
   wp_deregister_script('jquery');
   // jQuery
   wp_enqueue_script('jquery', '//code.jquery.com/jquery-3.6.1.min.js', [], '3.6.1');
-  // Splide用のJS
-  wp_enqueue_script('splide-script', '//cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js', [], null, true);
   // 基本JavaScript
   wp_enqueue_script('my-script', get_theme_file_uri() . '/assets/js/bundle.js', [], filemtime(get_theme_file_path('assets/js/bundle.js')), true);
-  // Splide用のCSS
-  wp_enqueue_style('splide-style', '//cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide-core.min.css', [], null, 'all');
   // 基本CSS
   wp_enqueue_style('my-style', get_theme_file_uri() . '/assets/css/style.css', [], filemtime(get_theme_file_path('assets/css/style.css')), 'all');
 }
