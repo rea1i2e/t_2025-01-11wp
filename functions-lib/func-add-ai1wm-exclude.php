@@ -8,10 +8,14 @@ add_filter(
 		$theme_dir = basename(get_theme_root() . '/' . get_stylesheet()); // 実際のテーマディレクトリ名を取得
 		$exclude_filters[] = $theme_dir . '/.git';
 		$exclude_filters[] = $theme_dir . '/.gitignore';
-		$exclude_filters[] = $theme_dir . '/gulp';
+		$exclude_filters[] = $theme_dir . '/.DS_Store';
+		$exclude_filters[] = $theme_dir . '/.github';
+		$exclude_filters[] = $theme_dir . '/.vscode';
 		$exclude_filters[] = $theme_dir . '/src';
 		$exclude_filters[] = $theme_dir . '/README.md';
-
+		$exclude_filters[] = $theme_dir . '/package-lock.json';
+		$exclude_filters[] = $theme_dir . '/package.json';
+		$exclude_filters[] = $theme_dir . '/node_modules';
 		return $exclude_filters;
 	}
 );
