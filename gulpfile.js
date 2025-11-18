@@ -23,20 +23,20 @@ const path = require("path");
 
 // 読み込み先
 const srcPath = {
-  css: "../src/sass/**/*.scss",
-  js: "../src/js/**/*",
-  img: "../src/images/**/*",
-  rt: "../src/root/**/*",
+  css: "./src/sass/**/*.scss",
+  js: "./src/js/**/*",
+  img: "./src/images/**/*",
+  rt: "./src/root/**/*",
 };
 
 
 // WordPress反映用
 const destWpPath = {
-  all: `../assets/**/*`,
-  css: `../assets/css/`,
-  js: `../assets/js/`,
-  img: `../assets/images/`,
-  rt: `../`,
+  all: `./assets/**/*`,
+  css: `./assets/css/`,
+  js: `./assets/js/`,
+  img: `./assets/images/`,
+  rt: `./`,
 };
 
 // Sassコンパイル
@@ -117,7 +117,7 @@ const jsWebpack = () => {
       mode: "development",
       devtool: "source-map",
       entry: {
-        bundle: "../src/js/index.js" // エントリーポイント
+        bundle: "./src/js/index.js" // エントリーポイント
       },
       output: {
         filename: "bundle.js"
@@ -191,7 +191,7 @@ const watchFiles = () => {
   watch(srcPath.js, series(jsWebpack, browserSyncReload));
   watch(srcPath.img, series(imgImagemin, browserSyncReload));
   watch(srcPath.rt, series(copyRootFiles, browserSyncReload));
-  watch('../**/*.php').on('change', browserSync.reload);
+  watch('./**/*.php').on('change', browserSync.reload);
 };
 
 // ブラウザシンク付きの開発用タスク
