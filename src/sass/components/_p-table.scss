@@ -1,0 +1,26 @@
+@use 'global' as *;
+
+.p-table {
+
+}
+
+.p-table__thead {
+
+}
+
+.p-table__tr {
+
+}
+
+.p-table__th {
+
+}
+
+.p-table__tbody {
+
+}
+
+.p-table__td {
+  min-width: rem(300); // 横スクロールを出すための仮設置
+}
+

@@ -27,6 +27,8 @@
     <?php get_template_part('components/p-dialog'); ?>
     <h2>タブ切り替え</h2>
     <?php get_template_part('components/p-tab'); ?>
+    <h2>スクロールヒント</h2>
+    <?php get_template_part('components/p-scroll-hint-table'); ?>
   </div>
 </main>
 <?php get_footer(); ?>
