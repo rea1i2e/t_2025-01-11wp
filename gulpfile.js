@@ -31,7 +31,7 @@ const srcPath = {
 
 
 // WordPress反映用
-const destWpPath = {
+const distPath = {
   all: `./assets/**/*`,
   css: `./assets/css/`,
   js: `./assets/js/`,
@@ -60,7 +60,7 @@ const cssSass = () => {
     }))
     .pipe(postcss([autoprefixer({ overrideBrowserslist: browsers })])) // ベンダープレフィックス自動付与
     .pipe(sourcemaps.write('./')) // ソースマップの出力先をcssファイルから見たパスに指定
-    .pipe(dest(destWpPath.css)) // 
+    .pipe(dest(distPath.css)) // 
     .pipe(notify({ // エラー発生時のアラート出力
       message: 'Sassをコンパイルしました！',
       onLast: true
@@ -73,7 +73,7 @@ const imgImagemin = () => {
   return (
     src(srcPath.img)
       // 変更があった画像のみ処理対象に
-      .pipe(changed(destWpPath.img))
+      .pipe(changed(distPath.img))
       // 画像を圧縮
       .pipe(
         imagemin(
@@ -99,8 +99,8 @@ const imgImagemin = () => {
         )
       )
       // 圧縮済みの画像ファイルを出力先に保存
-      .pipe(dest(destWpPath.img))
-      .pipe(webp()).pipe(dest(destWpPath.img)) // webp不要な場合はコメントアウト
+      .pipe(dest(distPath.img))
+      .pipe(webp()).pipe(dest(distPath.img)) // webp不要な場合はコメントアウト
   );
 };
 
@@ -142,28 +142,19 @@ const jsWebpack = () => {
         ]
       },
       resolve: {
-        extensions: [".js"],
-        modules: [
-          path.resolve(__dirname, "node_modules"),
-          "node_modules"
-        ],
-        alias: {
-          "@splidejs/splide": path.resolve(__dirname, "node_modules/@splidejs/splide"),
-          "@splidejs/splide-extension-auto-scroll": path.resolve(__dirname, "node_modules/@splidejs/splide-extension-auto-scroll")
-        }
+        extensions: [".js"]
       }
     }))
-    .pipe(dest(destWpPath.js))
+    .pipe(dest(distPath.js))
     .pipe(notify({
       message: 'JavaScriptをバンドルしました！',
       onLast: true
     }));
 };
 
-
 // root/に格納したファイルをそのまま出力
 const copyRootFiles = () => {
-  return src(srcPath.rt).pipe(dest(destWpPath.rt));
+  return src(srcPath.rt).pipe(dest(distPath.rt));
 };
 
 // ブラウザーシンク
@@ -182,7 +173,7 @@ const browserSyncReload = (done) => {
 
 // ファイルの削除
 const clean = () => {
-  return del([destWpPath.all], { force: true });
+  return del([distPath.all], { force: true });
 };
 
 // ファイルの監視
