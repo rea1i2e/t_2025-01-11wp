@@ -36,7 +36,6 @@ jobs:
 
       - name: Build project
         run: |
-          cd gulp
           npm run build
         env:
           CI: true
