@@ -31,7 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd gulp
           npm install --frozen-lockfile
 
       - name: Build project
