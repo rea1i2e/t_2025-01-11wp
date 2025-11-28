@@ -11,7 +11,6 @@
 ## 導入手順
 - LOCALなどを使って、WordPressをインストール
 - theme直下に設置して、リモートリポジトリと接続
-- `cd` コマンドで、`gulp/`へ移動
 - `npm i` を実行
 - `gulp/`に`node_modules`、`package-lock.json`が生成されたことを確認
 - `gulpfile.js`の`proxy`の設定「http://XXXXX.local/」とLOCALのSiteDomainを合わせる
