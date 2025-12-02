@@ -55,7 +55,7 @@ const cssSass = () => {
       }))
     .pipe(sassGlob()) // globパターンを使用可にする
     .pipe(sass.sync({ // sassコンパイル
-      includePaths: ['src/sass'], // 相対パス省略
+      includePaths: ['src/sass', 'node_modules'], // 相対パス省略
       outputStyle: 'expanded' // 出力形式をCSSの一般的な記法にする
     }))
     .pipe(postcss([autoprefixer({ overrideBrowserslist: browsers })])) // ベンダープレフィックス自動付与
@@ -157,6 +157,12 @@ const copyRootFiles = () => {
   return src(srcPath.rt).pipe(dest(distPath.rt));
 };
 
+// kiso.cssをassets/css/にコピー
+const copyKisoCss = () => {
+  return src('node_modules/kiso.css/kiso.css')
+    .pipe(dest(distPath.css));
+};
+
 // ブラウザーシンク
 const browserSyncOption = {
   notify: false,
@@ -187,9 +193,9 @@ const watchFiles = () => {
 
 // ブラウザシンク付きの開発用タスク
 exports.default = series(
-  series(cssSass, jsWebpack, imgImagemin, copyRootFiles),
+  series(copyKisoCss, cssSass, jsWebpack, imgImagemin, copyRootFiles),
   parallel(watchFiles, browserSyncFunc)
 );
 
 // 本番用タスク
-exports.build = series(clean, cssSass, jsWebpack, imgImagemin, copyRootFiles);
+exports.build = series(clean, copyKisoCss, cssSass, jsWebpack, imgImagemin, copyRootFiles);

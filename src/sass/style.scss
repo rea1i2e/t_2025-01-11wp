@@ -1,4 +1,6 @@
 @use "./base/_reset";
+@use "./base/_root";
+@use "./base/_admin-bar";
 @use "./base/_base";
 @use "./layout/**";
 @use "./components/**";
