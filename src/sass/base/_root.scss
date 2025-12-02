@@ -1,0 +1,24 @@
+@use 'global' as *;
+
+@font-face {
+  font-family: "Noto Sans JP VF";
+  src: url("/fonts/NotoSansJP-VF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --desigh-width: 375;
+  --base-font-family: "Noto Sans JP VF";
+
+  --color-black: #333;
+  --color-white: #fff;
+
+  --header-height: #{rem(60)};
+  @include mq() {
+    --desigh-width: 1440;
+
+    --header-height: #{rem(100)};
+  }
+}
