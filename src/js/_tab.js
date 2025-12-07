@@ -10,8 +10,10 @@
  * data-id属性は、タブトリガーがどのターゲットを表示するかを識別するために使用される
  * id属性は、各ターゲットを一意に識別するために使用され、data-id属性と一致する必要がある
  */
-document.addEventListener('DOMContentLoaded', () => { // ページのHTMLが完全にロードされたら処理を実行
+const initTab = () => {
   const tabContainers = document.querySelectorAll('.js-tab'); // 各タブコンテナを取得
+  
+  if (tabContainers.length === 0) return;
   
   tabContainers.forEach(tabContainer => { // 各タブコンテナごとに処理
     const tabTriggers = tabContainer.querySelectorAll('.js-tab-trigger'); // このコンテナ内のトリガーのみ取得
@@ -31,10 +33,13 @@ document.addEventListener('DOMContentLoaded', () => { // ページのHTMLが完�
           target.classList.remove('is-active') // 各コンテンツのis-activeを削除
         });
         
-        if (currentContent !== null) { // 該当のタブコンテンツが空でない場合に処理を実行
-          currentContent.classList.add('is-active') // 該当のコンテンツにis-active付与
-        }
+        if (!currentContent) return; // 該当のタブコンテンツが存在しない場合は処理を中断
+        
+        currentContent.classList.add('is-active') // 該当のコンテンツにis-active付与
       })
     });
   });
-});
+};
+
+// type="module"のスクリプトはDOMContentLoadedの後に実行されるため、単純に呼び出すだけで良い
+initTab();

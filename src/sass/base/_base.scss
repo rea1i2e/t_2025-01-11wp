@@ -1,125 +1,73 @@
 @use "global" as *;
 
-@font-face {
-  font-family: "Noto Sans JP VF";
-  src: url("../../fonts/NotoSansJP-VF.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* リキッドレイアウト */
 html {
-  //375px~767px
   font-size: 16px;
 
-  //~375px
-  @media (max-width: 375px) {
-    font-size: vw(375, 16);
-  }
+  @if $startFrom == sp {
+    @media (max-width: 375px) {
+      font-size: vw(375, 16);
+      font-size: cqi(375, 16);
+    }
 
-  @include mq("md") {
-    font-size: vw($inner-pc + $padding-pc * 2, 16);
-  }
+    @include mq() {
+      font-size: vw($inner-pc + $padding-pc * 2, 16);
+      font-size: cqi($inner-pc + $padding-pc * 2, 16);
+    }
 
-  //inner~max-screen
-  @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
-    font-size: 16px;
-  }
-}
+    @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
+      font-size: 16px;
+    }
+  } @else {
+    @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
+      font-size: vw($inner-pc + $padding-pc * 2, 16);
+      font-size: cqi($inner-pc + $padding-pc * 2, 16);
+    }
 
-//PCファースト
-// html {
-//   font-size: 16px;
+    @include mq() {
+      font-size: 16px;
+    }
 
-//   @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
-//     font-size: vw($inner-pc + $padding-pc * 2, 16);
-//   }
-
-//   @include mq("md") {
-//     font-size: 16px;
-//   }
-
-//   //~375px
-//   @media (max-width: 375px) {
-//     font-size: vw(375, 16);
-//   }
-// }
-
-:root {
-  --wp-admin-bar-height: 0px;
-
-  --base-font-family: "Noto Sans JP VF", sans-serif;
-
-  --color-black: #111;
-  --color-white: #fff;
-
-  --header-height: #{rem(60)};
-  @include mq() {
-    --header-height: #{rem(100)};
+    @media (max-width: 375px) {
+      font-size: vw(375, 16);
+      font-size: cqi(375, 16);
+    }
   }
 }
 
-:root:has(.admin-bar) {
-  --wp-admin-bar-height: 32px;
-}
-
-@media (max-width: 782px) {
-  :root:has(.admin-bar) {
-    --wp-admin-bar-height: 46px;
-  }
-}
-
-/* 小さい画面では #wpadminbar を固定 */
-@media (max-width: 600px) {
-  #wpadminbar {
-    position: fixed !important;
-  }
-}
-
-html {
-  scroll-behavior: smooth; // test 構築中だけコメントアウト
-  scroll-padding-top: calc(var(--header-height) + var(--wp-admin-bar-height)) !important;
-  -webkit-text-size-adjust: 100%;
-}
 
 body {
   container-type: inline-size;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - var(--wp-admin-bar-height)) !important;
-  min-height: calc(100dvh - var(--wp-admin-bar-height)) !important;
+  display: grid;
+  /* headerは浮いているので、行数にカウントしない */
+  grid-template-rows: 1fr auto;
+  min-height: 100vh;
+  height: 100%;
   text-rendering: optimizeSpeed;
-  color: var(--color-black);
   font-family: var(--base-font-family);
   line-height: 1.5;
-  overflow-wrap: anywhere; /* 収まらない場合に折り返す */
-  word-break: normal; /* 単語の分割はデフォルトに依存 */
-  line-break: strict; /* 禁則処理を厳格に適用 */
 }
 
-main {
-  flex: 1;
+a {
+  transition: opacity var(--hover-transition);
+}
+
+a:not([class]) {
+  text-decoration: underline;
 }
 
 /* pcの電話番号発信対応 */
 a[href^="tel:"] {
-  @include mq() {
+  @if $startFrom == sp {
+    @include mq() {
+      pointer-events: none;
+    }
+  } @else {
     pointer-events: none;
+    @include mq() {
+      pointer-events: initial;
+    }
   }
-}
-
-// PCファースト
-// a[href^="tel:"] {
-//   pointer-events: none;
-//   @include mq() {
-//     pointer-events: initial;
-//   }
-// }
-
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.3s;
 }
 
 @media (any-hover: hover) {
@@ -128,21 +76,6 @@ a {
   }
 }
 
-// :focus-visible
 a:focus-visible {
   opacity: 0.7;
-}
-
-a:where([target="_blank"]) {
-  font-size: var(--font-size, #{rem(16)}); // フォールバック値付き
-}
-
-a:where([target="_blank"])::after {
-  margin-left: rem(6);
-  display: inline-block;
-  block-size: var(--icon-size, #{rem(16)});
-  aspect-ratio: 1;
-  background: url(../images/common/icon_external.svg) no-repeat center / contain;
-  content: "";
-  transform: translateY(calc((var(--font-size, #{rem(16)}) - var(--icon-size, #{rem(16)})) / -2 + 2px));
 }

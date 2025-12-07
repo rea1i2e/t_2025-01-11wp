@@ -1,3 +1,10 @@
+/**
+ * dialog要素を使用したモーダルウィンドウの実装
+ * 参考：https://www.tak-dcxi.com/article/implementation-example-of-a-modal-created-using-the-dialog-element#%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B%E8%A6%81%E7%B4%A0%E3%81%AB%E3%81%AF-overscroll-behaviorcontain-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%2582%258B
+ * カスタマイズ
+ * ・デバッグ用の処理（1つ目のモーダル展開）
+ * ・scrollbar-gutter: stable;を前提にしているため、paddingInlineEndを設定しない
+ */
 
 const initializeModal = (modal) => {
   // モーダル要素が見つからない場合はエラーをログに記録して早期リターン
@@ -157,13 +164,6 @@ const isVerticalWritingMode = () => {
   return writingMode.includes("vertical");
 };
 
-// スクロールバーの幅を計算する
-const getScrollBarSize = () => {
-  const scrollBarXSize = window.innerHeight - document.body.clientHeight;
-  const scrollBarYSize = window.innerWidth - document.body.clientWidth;
-  return isVerticalWritingMode() ? scrollBarXSize : scrollBarYSize;
-};
-
 // スクロール位置を取得する
 const getScrollPosition = (fixed) => {
   if (fixed) {
@@ -203,22 +203,25 @@ const restorePosition = (scrollPosition) => {
 
 // 背面を固定する
 const backfaceFixed = (fixed) => {
-  const scrollBarWidth = getScrollBarSize();
   const scrollPosition = getScrollPosition(fixed);
-  document.body.style.paddingInlineEnd = fixed ? `${scrollBarWidth}px` : "";
   applyStyles(scrollPosition, fixed);
   if (!fixed) {
     restorePosition(scrollPosition);
   }
 };
 
-const targets = document.querySelectorAll(".js-dialog");
+const initDialog = () => {
+  const targets = document.querySelectorAll(".js-dialog");
 
-targets?.forEach((target) => {
-  initializeModal(target);
-});
+  targets?.forEach((target) => {
+    initializeModal(target);
+  });
 
-// // デバッグ用：1つ目のモーダルを自動的に開く
-// if (targets.length > 0) {
-//   openModal(targets[0]);
-// }
+  // // デバッグ用：1つ目のモーダルを自動的に開く
+  // if (targets.length > 0) {
+  //   openModal(targets[0]);
+  // }
+};
+
+// type="module"のスクリプトはDOMContentLoadedの後に実行されるため、単純に呼び出すだけで良い
+initDialog();

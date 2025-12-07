@@ -1,4 +1,5 @@
-@use 'global' as *;
+@use "global" as *;
+/* フォントの読み込みとカスタムプロパティ定義 */
 
 @font-face {
   font-family: "Noto Sans JP VF";
@@ -11,14 +12,16 @@
 :root {
   --desigh-width: 375;
   --base-font-family: "Noto Sans JP VF";
-
-  --color-black: #333;
+  --color-black: #000;
   --color-white: #fff;
-
-  --header-height: #{rem(60)};
+  --header-height: #{rem(72)};
+  --inner: #{rem($inner-sp)};
+  --inner-padding: #{rem($padding-sp)};
+  --hover-transition: 0.3s ease-in-out;
   @include mq() {
     --desigh-width: 1440;
-
-    --header-height: #{rem(100)};
+    --header-height: #{rem(90)};
+    --inner-padding: #{rem($padding-pc)};
+    --inner: #{rem($inner-pc)};
   }
 }

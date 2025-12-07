@@ -26,7 +26,6 @@ const srcPath = {
   css: "./src/sass/**/*.scss",
   js: "./src/js/**/*",
   img: "./src/images/**/*",
-  rt: "./src/root/**/*",
 };
 
 
@@ -36,7 +35,6 @@ const distPath = {
   css: `./assets/css/`,
   js: `./assets/js/`,
   img: `./assets/images/`,
-  rt: `./`,
 };
 
 // Sassコンパイル
@@ -152,11 +150,6 @@ const jsWebpack = () => {
     }));
 };
 
-// root/に格納したファイルをそのまま出力
-const copyRootFiles = () => {
-  return src(srcPath.rt).pipe(dest(distPath.rt));
-};
-
 // kiso.cssをassets/css/にコピー
 const copyKisoCss = () => {
   return src('node_modules/kiso.css/kiso.css')
@@ -187,15 +180,14 @@ const watchFiles = () => {
   watch(srcPath.css, series(cssSass, browserSyncReload));
   watch(srcPath.js, series(jsWebpack, browserSyncReload));
   watch(srcPath.img, series(imgImagemin, browserSyncReload));
-  watch(srcPath.rt, series(copyRootFiles, browserSyncReload));
   watch('./**/*.php').on('change', browserSync.reload);
 };
 
 // ブラウザシンク付きの開発用タスク
 exports.default = series(
-  series(copyKisoCss, cssSass, jsWebpack, imgImagemin, copyRootFiles),
+  series(copyKisoCss, cssSass, jsWebpack, imgImagemin),
   parallel(watchFiles, browserSyncFunc)
 );
 
 // 本番用タスク
-exports.build = series(clean, copyKisoCss, cssSass, jsWebpack, imgImagemin, copyRootFiles);
+exports.build = series(clean, copyKisoCss, cssSass, jsWebpack, imgImagemin);
