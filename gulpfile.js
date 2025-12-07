@@ -1,4 +1,4 @@
-const proxy = "http://t2025-01-11wp.local/";
+const proxy = "http://2025-10-20hr8.local/";
 const { src, dest, watch, series, parallel } = require("gulp"); // Gulpの基本関数をインポート
 const sass = require("gulp-sass")(require("sass")); // SCSSをCSSにコンパイルするためのモジュール
 const plumber = require("gulp-plumber"); // エラーが発生してもタスクを続行するためのモジュール
@@ -15,7 +15,7 @@ const imageminMozjpeg = require("imagemin-mozjpeg"); // JPEGを最適化する�
 const imageminPngquant = require("imagemin-pngquant"); // PNGを最適化するためのモジュール
 const changed = require("gulp-changed").default || require("gulp-changed"); // 変更されたファイルのみを対象にするためのモジュール
 const del = require("del"); // ファイルやディレクトリを削除するためのモジュール
-const webp = require("gulp-webp");  // webp不要時コメントアウト
+// const webp = require("gulp-webp");  // webp不要時コメントアウト
 const webpackStream = require("webpack-stream");
 const named = require("vinyl-named");
 const path = require("path");
@@ -44,6 +44,7 @@ const browsers = [ // 対応ブラウザの指定
   'not dead',
   'not ie 11'
 ]
+
 const cssSass = () => {
   return src(srcPath.css)
     .pipe(sourcemaps.init()) // ソースマップの初期化
@@ -53,15 +54,17 @@ const cssSass = () => {
       }))
     .pipe(sassGlob()) // globパターンを使用可にする
     .pipe(sass.sync({ // sassコンパイル
-      includePaths: ['src/sass', 'node_modules'], // 相対パス省略
+      includePaths: ['src/sass'], // 相対パス省略
       outputStyle: 'expanded' // 出力形式をCSSの一般的な記法にする
     }))
     .pipe(postcss([autoprefixer({ overrideBrowserslist: browsers })])) // ベンダープレフィックス自動付与
     .pipe(sourcemaps.write('./')) // ソースマップの出力先をcssファイルから見たパスに指定
     .pipe(dest(distPath.css)) // 
-    .pipe(notify({ // エラー発生時のアラート出力
+    .pipe(notify({ // タスク完了時の通知
       message: 'Sassをコンパイルしました！',
       onLast: true
+    }).on('error', () => {
+      // 通知エラーを無視して処理を続行
     }))
 }
 
@@ -98,7 +101,7 @@ const imgImagemin = () => {
       )
       // 圧縮済みの画像ファイルを出力先に保存
       .pipe(dest(distPath.img))
-      .pipe(webp()).pipe(dest(distPath.img)) // webp不要な場合はコメントアウト
+      // .pipe(webp()).pipe(dest(distPath.img)) // webp不要な場合はコメントアウト
   );
 };
 
@@ -147,10 +150,11 @@ const jsWebpack = () => {
     .pipe(notify({
       message: 'JavaScriptをバンドルしました！',
       onLast: true
+    }).on('error', () => {
+      // 通知エラーを無視して処理を続行
     }));
 };
 
-// kiso.cssをassets/css/にコピー
 const copyKisoCss = () => {
   return src('node_modules/kiso.css/kiso.css')
     .pipe(dest(distPath.css));
