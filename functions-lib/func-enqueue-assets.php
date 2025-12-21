@@ -18,12 +18,13 @@ function my_script_init()
 add_action('wp_enqueue_scripts', 'my_script_init');
 
 /**
- * bundle.jsにtype="module"属性を追加
+ * bundle.js type="module" に置き換え
  */
 function add_module_type_to_script($tag, $handle, $src)
 {
   if ('my-script' === $handle) {
-    $tag = str_replace('<script ', '<script type="module" ', $tag);
+    // type="text/javascript"をtype="module"に置き換え
+    $tag = str_replace('type="text/javascript"', 'type="module"', $tag);
   }
   return $tag;
 }
