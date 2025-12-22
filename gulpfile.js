@@ -1,4 +1,4 @@
-const proxy = "http://2025-10-20hr8.local/";
+const proxy = "http://t2025-01-11wp.local/";
 const { src, dest, watch, series, parallel } = require("gulp"); // Gulpの基本関数をインポート
 const sass = require("gulp-sass")(require("sass")); // SCSSをCSSにコンパイルするためのモジュール
 const plumber = require("gulp-plumber"); // エラーが発生してもタスクを続行するためのモジュール
