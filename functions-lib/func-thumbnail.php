@@ -1,12 +1,30 @@
 <?php
-function display_thumbnail($size = 'full') {
+/**
+ * サムネイル画像表示関数
+ * 
+ * 使用方法:
+ * 
+ * // デフォルト（fullサイズ、lazy loading）
+ * <?php display_thumbnail(); ?>
+ * 
+ * // eager loadingを指定
+ * <?php display_thumbnail('full', 'eager'); ?>
+ * 
+ * // サイズとloadingを指定
+ * <?php display_thumbnail('medium', 'eager'); ?>
+ * 
+ * @param string $size 画像サイズ（デフォルト: 'full'）
+ * @param string $loading loading属性（'lazy' または 'eager'、デフォルト: 'lazy'）
+ */
+function display_thumbnail($size = 'full', $loading = 'lazy') {
     $t = get_thumbnail_data($size);
 
     // width/height が取れないケース（SVG等）では属性を省略して出力
     $attrs = [
-        'src'   => esc_url($t['url']),
-        'alt'   => esc_attr($t['alt']),
-        'class' => esc_attr($t['class']),
+        'src'     => esc_url($t['url']),
+        'alt'     => esc_attr($t['alt']),
+        'class'   => esc_attr($t['class']),
+        'loading' => esc_attr($loading),
     ];
     if (!empty($t['width']) && !empty($t['height'])) {
         $attrs['width']  = (int) $t['width'];
@@ -36,9 +54,9 @@ function get_thumbnail_data($size = 'full') {
         }
     } else {
         // フォールバック（例: SVG の場合は width/height を省略してもOK）
-        $url      = get_template_directory_uri() . '/assets/images/common/logo.svg';
-        $width    = 371;   // ここを null にして属性を省略したいなら null に
-        $height   = 239;
+        $url      = get_template_directory_uri() . '/assets/images/common/logo.png';
+        $width    = 290;   // ここを null にして属性を省略したいなら null に
+        $height   = 94;
         $class    = 'u-no-image';
         $alt_text = 'no image';
     }
